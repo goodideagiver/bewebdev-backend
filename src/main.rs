@@ -12,6 +12,9 @@ pub struct ApiDoc;
 mod hello_axum;
 use hello_axum::hello_axum;
 
+mod comments;
+use comments::comments;
+
 use utoipa_swagger_ui::SwaggerUi;
 
 #[tokio::main]
@@ -20,6 +23,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let app = Router::new()
         .route("/", get(hello_axum))
+        .route("/comments", get(comments))
         .merge(SwaggerUi::new("/swagger-ui").url("/api-doc/openapi.json", ApiDoc::openapi()));
 
     println!("listening on {}", socket_address);
